@@ -1,0 +1,38 @@
+name: EBAC CI
+
+on:
+  push:
+    branches: [master]
+
+  workflow_dispatch:
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v5
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24
+  jobs:
+      cypress-run:
+      steps:
+        - uses: cypress-io/github-action@v6
+          continue-on-error: true
+          with: 
+            install-command: npm install
+            browser: chrome
+            start: npm start
+        - name: Publish Report
+          uses: peaceiris/actions-gh-pages@v4
+          with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./mochawesome-report
+
+
+
+  
+    
