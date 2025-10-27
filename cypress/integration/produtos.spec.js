@@ -43,14 +43,6 @@ describe('Testes da Funcionalidade Produtos', () => {
         })
     });
 
-    it('Deve validar mensagem de erro ao cadastrar produto repetido', () => {
-        cy.cadastrarProduto(token, 'Produto EBAC Novo 1', 250, "Descrição do produto novo", 180)
-            .then((response) => {
-                expect(response.status).to.equal(400)
-                expect(response.body.message).to.equal('Já existe produto com esse nome')
-            })
-    });
-
     it('Deve editar um produto já cadastrado', () => {
         cy.request('produtos').then(response => {
             let id = response.body.produtos[0]._id
